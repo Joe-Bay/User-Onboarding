@@ -3,6 +3,7 @@ import Form from './Form'
 import * as yup from 'yup'
 import axios from 'axios'
 import formchema from './formSchema'
+import User from './User'
 
 import './App.css';
 import formSchema from './formSchema';
@@ -105,9 +106,12 @@ useEffect(() => { // this sets the disable button to work to change when form va
       />
 
       {
-        // users.map(user => {
-          
-        // })
+        users.map(user => {
+          return (
+          <User key={user.id} details={user} />
+          )
+        
+        })
       }
     </div>
   );
