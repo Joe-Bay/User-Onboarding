@@ -31,7 +31,7 @@ const Form = props => {
         <form className = 'form-container' onSubmit={onSubmit}>
             <div className = 'form group'>
                 <h2>Add Users!</h2>
-                <button disabled={disabled}>Submit</button>
+                <button id='submitBtn' disabled={disabled}>Submit</button>
     {/* this next bit, is how we will display errors to the user */}
                 <div className="errors"> 
                     <div>{errors.name}</div>
