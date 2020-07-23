@@ -19,7 +19,11 @@ describe('Inputs and submit button', () => {
     })
     it('checks for the error messages if a field is left empty', () => {
         cy.get('input[name="name"').type('Mi')
-        cy.get('.errors').contains('Name must be at least 3 characters')
+        cy.get('input[name="email"').type('Mi')
+        cy.get('input[name="password"').type('miah')
+        cy.get('.errors').contains('Name must be at least 3 characters') 
+        cy.get('.errors').contains('Email must be valid') 
+        cy.get('.errors').contains('Password must have atleast 6 characters') 
     })
     
 })
