@@ -19,7 +19,7 @@ const inititalFormErrors = {
   name: '',
   email: '',
   password: '',
-  terms: '',
+  terms: false,
 }
 const initialUser = []
 const initialButtonDisable = true
@@ -56,17 +56,35 @@ function App() {
 
   const inputChange = (name, value) => { // this is where we can run the validation checks
     // ima do this part later
-  }
-
-
-  const checkboxChange = (name, isChecked) => { // this is one is kind of confusing, but basically tracks if the checkbox is checked while spreading the values to not ruin them
+    yup
+    .reach(formSchema, name)
+    .validate(value)
+    .then(valid => {
+      setFormErrors({
+        ...formErrors,
+        [name]: "",
+      })
+    })
+    .catch(err => {
+      setFormErrors({
+        ...formErrors,
+        [name]: err.errors[0]
+      })
+    })
     setFormValues({
       ...formValues,
-      terms:{
-        ...formValues.terms,
-        [name]: isChecked,
-      }
+      [name]: value
     })
+  }
+  
+
+
+  const checkboxChange = (name, checked) => { // this is one is kind of confusing, but basically tracks if the checkbox is checked while spreading the values to not ruin them
+    setFormValues({
+      ...formValues, // taking a spread of the values, then inputting the variables, checked being true
+      [name]: checked
+    })    
+
   }
 
 const submit = () => {
@@ -74,10 +92,11 @@ const submit = () => {
     name: formValues.name.trim(),
     email: formValues.email.trim(),
     password: formValues.password.trim(),
-    terms: Object.keys(formValues.terms).filter(trm => formValues.terms[trm]), // dont truly understand this part. Please further inspect when given an opportunity
+    terms: formValues.terms
   }
 // officially posting the new user by using the helper function
   postNewUser(newUser)
+  
 }
 
 
@@ -96,6 +115,7 @@ useEffect(() => { // this sets the disable button to work to change when form va
 
   return (
     <div className="App">
+      
       <Form // giving all the props that form needs
       values={formValues}
       inputChange={inputChange}
